@@ -11,14 +11,16 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/users', { serviceId,password});
-      localStorage.setItem('token', res.data.token);
+      const res = await axios.post('/api/users/login', { serviceId,password});
+      alert(res.status)
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       if (res.data.user.role === 'admin') {
         navigate('/admin');
       } else {
         navigate(`/military/${res.data.user.serviceId}`);
       }
     } catch (err) {
+      alert(JSON.stringify(err))
       alert('Login failed');
     }
   };

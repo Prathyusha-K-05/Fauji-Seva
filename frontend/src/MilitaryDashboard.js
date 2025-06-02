@@ -10,7 +10,7 @@ export default function MilitaryDashboard() {
   useEffect(() => {
     const fetchSchemes = async () => {
       try {
-        const res = await axios.get(`/api/schemes/${serviceId}`);
+        const res = await axios.get(`/api/schemes/eligible/${serviceId}`);
         setSchemes(res.data.eligibleSchemes);
       } catch (err) {
         alert('Failed to fetch schemes');
@@ -20,16 +20,19 @@ export default function MilitaryDashboard() {
   }, [serviceId]);
 
   const apply = async (id) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(`/api/schemes/${id}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      alert('Applied successfully');
-    } catch {
-      alert('Application failed');
-    }
-  };
+  try {
+    const serviceId = JSON.parse(localStorage.getItem('user'))?.serviceId;
+
+    await axios.post(`/api/schemes/apply/${id}`, {}, {
+      headers: { 'service-id': serviceId }
+    });
+
+    alert('Applied successfully');
+  } catch {
+    alert('Application failed');
+  }
+};
+
 
   return (
     <div className="military-dashboard-container">

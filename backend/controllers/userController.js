@@ -12,9 +12,14 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { serviceId, password } = req.body;
+  console.log(serviceId)
+  console.log(password)
 
-  const user = await User.findOne({ serviceId });
-  if (!user || user.password !== password) {
+  const user = await User.findOne({ serviceId }).lean();
+  console.log(JSON.stringify(user))
+  console.log(typeof(password))
+  console.log(typeof(user.password))
+  if (!user || user.password != password) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
