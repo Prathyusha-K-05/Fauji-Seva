@@ -10,6 +10,27 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+exports.loginUser = async (req, res) => {
+  const { serviceId, password } = req.body;
+
+  const user = await User.findOne({ serviceId });
+  if (!user || user.password !== password) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  res.json({
+    message: 'Login successful',
+    user: {
+      name: user.name,
+      serviceId: user.serviceId,
+      role: user.role,
+      designation: user.designation,
+      branch: user.branch,
+      retired: user.retired
+    }
+  });
+};
+
 exports.getUserByServiceId = async (req, res) => {
   try {
     const user = await User.findOne({ serviceId: req.params.serviceId });
