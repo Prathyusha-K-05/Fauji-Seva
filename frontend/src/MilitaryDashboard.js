@@ -43,7 +43,7 @@ export default function MilitaryDashboard() {
         <div className="schemes-grid">
           {schemes.map(s => (
             <div key={s._id} className="scheme-card">
-              <h2 className="scheme-title">{s.name}</h2>
+              <h2 className="scheme-title">{s.title}</h2>
               <p className="scheme-description">{s.description}</p>
               <button
                 onClick={() => apply(s._id)}

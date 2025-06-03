@@ -1,0 +1,5 @@
+.contact-page-bg {
+  background-color: #f0f8ff; /* Light blue background */
+  min-height: 100vh;         /* Full height of the viewport */
+  padding: 2rem 0;
+}
